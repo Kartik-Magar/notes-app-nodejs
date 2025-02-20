@@ -1,0 +1,33 @@
+const express =require('express');
+const path = require('path');
+const bcrypt = require('bcrypt');
+const rootDir = require('../utils/pathUtils');
+const User = require('../models/user');
+
+const registerRoute = express.Router();
+
+registerRoute.get("/register",async(req,res)=>{
+    res.render('register');
+})
+registerRoute.post('/register', async(req,res)=>{
+    try{
+
+        const existingUser = await User.findOne({ username: req.body.username });
+if(existingUser){
+    res.send("Usernsme already exist ");
+}
+
+        const user = new User({
+            username: req.body.username,
+            password: req.body.password
+        });
+        console.log(user);
+        await user.save();
+        res.redirect('/login');
+    } catch(err){
+        console.log('Error saving user to database:', err);
+        res.status(500).send('An error occurred while registering. Please try again.');  
+    }
+})
+
+module.exports = registerRoute;
