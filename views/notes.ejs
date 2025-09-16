@@ -1,146 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add-Notes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        h1 {
-            color: #333;
-            margin-top: 20px;
-        }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: #1f2937;
+    }
 
-        h2 {
-            color: #555;
-            margin: 10px 0;
-        }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #1d4ed8;
+    }
 
-        ol {
-            width: 80%;
-            padding-left: 20px;
-            list-style-type: decimal;
-        }
+    h2 {
+      font-size: 1.5rem;
+      margin: 20px 0 10px;
+      color: #2563eb;
+    }
 
-        li {
-            background-color: #fff;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+    .notes-container {
+      width: 100%;
+      max-width: 850px;
+      margin-bottom: 30px;
+    }
 
-        h3 {
-            margin: 0;
-            font-size: 18px;
-            color: #333;
-        }
+    .note-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+      transition: all 0.3s ease;
+    }
 
-        p {
-            color: #666;
-            font-size: 16px;
-            margin: 10px 0;
-        }
+    .note-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    }
 
-        a {
-            color: #007BFF;
-            text-decoration: none;
-            font-size: 14px;
-        }
+    .note-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: #111827;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    .note-card p {
+      color: #4b5563;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
 
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 500px;
-            margin-top: 20px;
-            text-align: center;
-        }
+    .note-card a {
+      text-decoration: none;
+      color: #3b82f6;
+      margin-right: 15px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
+    .note-card a:hover {
+      color: #1e40af;
+      text-decoration: underline;
+    }
 
-        button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .form-card {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 600px;
+      text-align: left;
+    }
 
-        button:hover {
-            background-color: #218838;
-        }
+    .form-card label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #1e293b;
+    }
 
-        a.logout {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 16px;
-            background-color: #f44336;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
+    .form-card input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
 
-        a.logout:hover {
-            background-color: #d32f2f;
-        }
+    .form-card input[type="text"]:focus {
+      border-color: #60a5fa;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+    }
 
-    </style>
-   
+    .form-card button {
+      background-color: #10b981;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-right: 10px;
+    }
+
+    .form-card button:hover {
+      background-color: #059669;
+    }
+
+    .form-card .logout {
+      background-color: #ef4444;
+      padding: 12px 24px;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .form-card .logout:hover {
+      background-color: #dc2626;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .note-card,
+      .form-card {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Wellcome to Add Notes</h1>
-    <h2>your notes:</h2>
 
-    <ol>
-        <% notes.forEach(note => { %>
-            <li>
-                <h3><%= note.title %></h3>
-                <p><%= note.content %></p>
-                <a href="/update/<%= note._id %>">Update</a> | 
-                <a href="/delete/<%= note._id %>">Delete</a>
-            </li>
-        <% }); %>
-    </ol>
+  <h1>📝 Notes Dashboard</h1>
+  <h2>Your Notes</h2>
 
-    <h2>Create a new note</h2>
-    <form action="/create" method="post">
-        <label for="title">Title: </label>
-        <input type="text" id="title" name="title"><br><br>
-        <label for="content">content: </label>
-        <input type="text" id="content" name="content">
-        <br><br>
-        <button type="submit">Create Note</button>
-        <a href="/logout">Logout</a>
-    </form>
+  <div class="notes-container">
+    <% notes.forEach(note => { %>
+      <div class="note-card">
+        <h3><%= note.title %></h3>
+        <p><%= note.content %></p>
+        <a href="/update/<%= note._id %>">✏️ Update</a>
+        <a href="/delete/<%= note._id %>">🗑️ Delete</a>
+      </div>
+    <% }); %>
+  </div>
+
+  <h2>Create a New Note</h2>
+  <form class="form-card" action="/create" method="POST">
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="content">Content</label>
+    <input type="text" id="content" name="content" required>
+
+    <button type="submit">Add Note</button>
+    <a href="/logout" class="logout">Logout</a>
+  </form>
 
 </body>
 </html>

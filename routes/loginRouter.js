@@ -1,36 +1,42 @@
-const express = require('express');
-const User = require('../models/user');
-
-const path = require('path');
-const rootDir = require("../utils/pathUtils");
+const express = require("express");
+const bcrypt = require("bcrypt");
+const User = require("../models/user");
 
 const loginRoute = express.Router();
 
-loginRoute.get("/login",(req,res)=>{
-    console.log("Login page trigger");
-    res.render('login');
-})
+// Show login page
+loginRoute.get("/login", (req, res) => {
+  console.log("Login page trigger");
+  res.render("login");
+});
 
-loginRoute.post('/login',async(req,res)=>{
-      try{
-        const {username, password} = req.body;
-        const user = await User.findOne({username});
+// Handle login
+loginRoute.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-        if(!user){
-            res.status(400).send("User not Found!!")
-        }
+    // Check if user exists
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).send("❌ User not found!");
+    }
 
-        if(user.password!==password){
-            return res.status(400).send("Incorrect Passward!!");
-        }
+    // Compare entered password with hashed password in DB
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send("❌ Incorrect password!");
+    }
 
-        req.session.userId = user._id
+    // Store user session
+    req.session.userId = user._id;
+    console.log("✅ User logged in:", user.username);
 
-        res.redirect('/notes');
-      } catch(err){
-        console.log(err);
-        res.status(500).send("Error Some thing is wrong");
-      }
-})
+    // Redirect to notes page
+    res.redirect("/notes");
+  } catch (err) {
+    console.error("❌ Login error:", err);
+    res.status(500).send("Error: Something went wrong");
+  }
+});
 
 module.exports = loginRoute;

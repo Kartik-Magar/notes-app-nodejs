@@ -1,113 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Update Note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* General Styles */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+    * {
       margin: 0;
-      padding: 20px;
-      color: #333;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* Container for the content */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #dfe9f3, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 50px 20px;
+      min-height: 100vh;
+      color: #1f2937;
+    }
+
     .container {
-      max-width: 600px;
-      margin: 0 auto;
       background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
+      width: 100%;
+      animation: fadeIn 0.6s ease-in-out;
     }
 
-    /* Heading */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     h1 {
-      color: #007bff;
+      font-size: 2rem;
+      margin-bottom: 30px;
       text-align: center;
-      margin-bottom: 20px;
-    }
-
-    /* Form Styling */
-    form {
-      margin-top: 20px;
+      color: #1d4ed8;
     }
 
     label {
+      font-weight: 600;
+      margin-bottom: 8px;
       display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #555;
+      color: #374151;
     }
 
     input[type="text"],
     textarea {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
-      box-sizing: border-box;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
     }
 
-    input[type="text"]:focus,
+    input:focus,
     textarea:focus {
-      border-color: #007bff;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
       outline: none;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
 
     textarea {
       resize: vertical;
-      min-height: 100px;
+      min-height: 120px;
     }
 
-    /* Button */
     button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #3b82f6, #1d4ed8);
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background: linear-gradient(to right, #1d4ed8, #1e40af);
     }
 
-    /* Back to Notes Link */
     a {
-      display: inline-block;
-      margin-top: 15px;
-      color: #007bff;
+      display: block;
+      text-align: center;
+      margin-top: 20px;
       text-decoration: none;
-      font-size: 14px;
+      color: #2563eb;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
     }
 
     a:hover {
+      color: #1e40af;
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <h1>Update Note</h1>
+  <div class="container">
+    <h1>Update Your Note</h1>
 
-  <form action="/update/<%= note._id %>" method="post">
-    <label for="title">Title: </label>
-    <input type="text" id="title" name="title" value="<%= note.title %>"><br><br>
-    <label for="content">Content: </label>
-    <textarea id="content" name="content"><%= note.content %></textarea><br><br>
-    <button type="submit">Update Note</button>
-  </form>
+    <form action="/update/<%= note._id %>" method="POST">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" value="<%= note.title %>" required>
 
-  <br>
+      <label for="content">Content</label>
+      <textarea id="content" name="content" required><%= note.content %></textarea>
 
-  <a href="/notes">Back to Notes</a>
+      <button type="submit">Update Note</button>
+    </form>
+
+    <a href="/notes">← Back to Notes</a>
+  </div>
 </body>
 </html>
