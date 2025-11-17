@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const bcrypt = require("bcrypts");
+const bcrypt = require("bcryptjs");
 const rootDir = require("../utils/pathUtils");
 const User = require("../models/user");
 
