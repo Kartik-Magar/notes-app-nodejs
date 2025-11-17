@@ -9,7 +9,9 @@ const registerRouter = require("./routes/registerRouter");
 const noteRoute = require("./routes/notesRouter");
 const logoutRoute = require("./routes/logoutRouter");
 // const initializePassword = require('./password-config');
-
+app.get("/", (req, res) => {
+  res.redirect("/login");
+});
 const app = express();
 const uri =
   "mongodb+srv://root:root@completecoding.kqe40.mongodb.net/notesdb?retryWrites=true&w=majority";
@@ -45,8 +47,4 @@ app.listen(PORT, () => {
   console.log(
     `Server is running on the address http://localhost:${PORT}/register`
   );
-});
-
-app.get("/", (req, res) => {
-  res.redirect("/login");
 });
