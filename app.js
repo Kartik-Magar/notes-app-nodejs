@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const bcrypt = require("bcrypts");
+const bcrypt = require("bcryptjs");
 const session = require("express-session");
 // local module
 const loginRouter = require("./routes/loginRouter");
