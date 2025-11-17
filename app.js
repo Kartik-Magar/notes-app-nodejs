@@ -46,3 +46,7 @@ app.listen(PORT, () => {
     `Server is running on the address http://localhost:${PORT}/register`
   );
 });
+
+app.get("/", (req, res) => {
+  res.redirect("/login");
+});
