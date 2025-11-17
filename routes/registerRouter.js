@@ -13,7 +13,7 @@ registerRoute.post("/register", async (req, res) => {
   try {
     const existingUser = await User.findOne({ username: req.body.username });
     if (existingUser) {
-      res.send("Usernsme already exist ");
+      return res.send("Usernsme already exist ");
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -24,7 +24,7 @@ registerRoute.post("/register", async (req, res) => {
     });
     console.log(user);
     await user.save();
-    res.redirect("/login");
+    return res.redirect("/login");
   } catch (err) {
     console.log("Error saving user to database:", err);
     res
