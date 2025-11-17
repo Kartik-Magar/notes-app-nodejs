@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -12,42 +13,44 @@ const logoutRoute = require("./routes/logoutRouter");
 
 const app = express();
 
-const uri =
-  "mongodb+srv://root:root@completecoding.kqe40.mongodb.net/notesdb?retryWrites=true&w=majority";
+// Mongo URI from .env
+const uri = process.env.MONGODB_URI;
 
 // MONGO CONNECTION
 mongoose
-  .connect(uri, {})
-  .then(() => console.log("MongoDb is connected successfully"))
-  .catch((err) => console.log(err));
+  .connect(uri)
+  .then(() => console.log("Mongo connected"))
+  .catch((err) => console.log("Mongo error:", err));
 
-// VIEW ENGINE
+// view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// MIDDLEWARES
+// middlewares
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
   session({
-    secret: "IMPpassword",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
 );
 
-// ✅ ADD THIS HOME ROUTE HERE
+// static folder (optional)
+app.use(express.static(path.join(__dirname, "public")));
+
+// home route
 app.get("/", (req, res) => {
-  return res.redirect("/login"); // or /register or /notes
+  res.redirect("/login");
 });
 
-// ROUTES
+// routes
 app.use(logoutRoute);
 app.use(registerRouter);
 app.use(loginRouter);
 app.use(noteRoute);
 
-// SERVER
+// server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at port ${PORT}`);
-});
+app.listen(PORT, () => console.log("Server running on", PORT));
